@@ -1,0 +1,85 @@
+#政务微信
+government:
+  affairs:
+    sync:
+      corpid: ww56b939172cbf5515
+      corpsecret: f0f5neQGBReXriZ_kZwAMmUcOxsoBkpoQQFgqspbuCM
+      serverUrl: https://weixin.baoan.gov.cn
+      parentId: 0
+      unitid: 0
+      agentid: 1000314
+      redirectUrl: http://127.0.0.1:8080/wechat/wxLogin/wxCallBack
+      message: https://weixin.baoan.gov.cn/cgi-bin/message/send
+      dailyUrl: https://open.weixin.qq.com/connect/oauth2/authorize?appid=ww56b939172cbf5515&redirect_uri=http%3A%2F%2F10.99.16.93%3A8991%2Flogin%3Ftype%3D2&response_type=code&scope=snsapi_userinfo&agentid=1000314&state=e567d298e3d7455b9a8f9cfc64fbbfc5#wechat_redirect
+      jcEventUrl: https://open.weixin.qq.com/connect/oauth2/authorize?appid=ww56b939172cbf5515&redirect_uri=http%3A%2F%2F10.99.16.93%3A8991%2Flogin%3Ftype%3D2&response_type=code&scope=snsapi_userinfo&agentid=1000314&state=e567d298e3d7455b9a8f9cfc64fbbfc5#wechat_redirect 
+      dbEventUrl:  https://open.weixin.qq.com/connect/oauth2/authorize?appid=ww56b939172cbf5515&redirect_uri=http%3A%2F%2F10.99.16.93%3A8991%2Flogin%3Ftype%3D2&response_type=code&scope=snsapi_userinfo&agentid=1000314&state=e567d298e3d7455b9a8f9cfc64fbbfc5#wechat_redirect
+      jcDetailUrl:  https://open.weixin.qq.com/connect/oauth2/authorize?appid=ww56b939172cbf5515&redirect_uri=http%3A%2F%2F10.99.16.93%3A8991%2Flogin%3Ftype%3D2&response_type=code&scope=snsapi_userinfo&agentid=1000314&state=e567d298e3d7455b9a8f9cfc64fbbfc5#wechat_redirect
+      dbDetailUrl:  https://open.weixin.qq.com/connect/oauth2/authorize?appid=ww56b939172cbf5515&redirect_uri=http%3A%2F%2F10.99.16.93%3A8991%2Flogin%3Ftype%3D2&response_type=code&scope=snsapi_userinfo&agentid=1000314&state=e567d298e3d7455b9a8f9cfc64fbbfc5#wechat_redirect
+      urgeUrl:  https://open.weixin.qq.com/connect/oauth2/authorize?appid=ww56b939172cbf5515&redirect_uri=http%3A%2F%2F10.99.16.93%3A8991%2Flogin%3Ftype%3D2&response_type=code&scope=snsapi_userinfo&agentid=1000314&state=e567d298e3d7455b9a8f9cfc64fbbfc5#wechat_redirect
+      msgGoTo: https://smartgate.baoan.gov.cn/mysbtest/prod-api/wechat/wxLogin/ssologin
+xxl:
+  job:
+    enable: true
+    appname: ${spring.application.name}
+    logpath: /data/applogs/xxl-job/${spring.application.name}/jobhandler
+    accessToken: xxl-job
+    logretentiondays: -1
+    port: 9751
+
+wx: 
+  open: 
+    sync: 
+      appId: ww56b939172cbf5515
+      appSecret: f0f5neQGBReXriZ_kZwAMmUcOxsoBkpoQQFgqspbuCM
+      redirectUrl: http://127.0.0.1:8080/wechat/wxLogin/wxCallBack
+
+   
+spring:  
+  datasource:
+    dynamic:
+      # 设置默认的数据源或者数据源组,默认值即为 master
+      primary: master
+      datasource:
+        # 主库数据源
+        master:
+          driver-class-name: org.postgresql.Driver
+          url: ${datasource.system-master.url}
+          username: ${datasource.system-master.username}
+          password: ${datasource.system-master.password}
+        # 从库数据源
+        # slave:
+        #  driver-class-name:
+        #  url:
+        #  username:
+        #  password:
+
+sso:
+  api:
+    conf:
+      serverUrl: https://smartgate.baoan.gov.cn
+      paasId: mysbpt
+      paasToken: zfQ02qcNeJpLGwmh2KeFj3TcgFCqKdXP
+
+wechatlogin:
+  redirect: https://smartgate.baoan.gov.cn/mysbtest/login
+  ssoLoginFailed: https://smartgate.baoan.gov.cn/mysbtest/403
+  maintain: https://smartgate.baoan.gov.cn/mysbtest/tips
+  # 系统维护开关 1关  2(开启维护服务)  
+  modelSwitch: '1'
+
+remindlimit:
+  time: '2023-05-09 00:00:00'
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+    show-extensions: true
+  api-docs:
+    path: /v3/api-docs
+  group-configs:
+    - group: 'default'
+      paths-to-match: '/config/**'
+      packages-to-scan: com.appeal.wechat.controller
+  default-flat-param-object: false

@@ -1,0 +1,116 @@
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    dynamic:
+      # 性能分析插件(有性能损耗 不建议生产环境使用)
+      p6spy: false
+      # 开启seata代理，开启后默认每个数据源都代理，如果某个不需要代理可单独关闭
+      seata: false
+      # 严格模式 匹配不到数据源则报错
+      strict: true
+      druid:
+        initial-size: 10
+        min-idle: 10
+        maxActive: 30
+        maxWait: 60000
+        timeBetweenEvictionRunsMillis: 60000
+        minEvictableIdleTimeMillis: 300000
+        validationQuery: SELECT 1
+        testWhileIdle: true
+        testOnBorrow: false
+        testOnReturn: false
+        poolPreparedStatements: true
+        maxPoolPreparedStatementPerConnectionSize: 30
+        filters: stat,slf4j
+        connectionProperties: druid.stat.mergeSql\=true;druid.stat.slowSqlMillis\=5000
+      # 设置默认的数据源或者数据源组,默认值即为 master
+      primary: master
+      datasource:
+        # 主库数据源
+        master:
+          driver-class-name: org.postgresql.Driver
+          url: ${datasource.datasync.url}
+          username: ${datasource.datasync.username}
+          password: ${datasource.datasync.password}
+        # 从库数据源
+        # slave:
+        #  driver-class-name:
+        #  url:
+        #  username:
+        #  password:
+
+#深圳民生诉求一体化平台接口请求配置项
+workorder:
+  #工单是否自动办结
+  isAutoComplete: true
+  isAutoCompleteWhite: 22,46
+  api:
+    #接口请求地址
+    #url: http://10.99.16.93:8282/proxy/api/
+    url: http://10.224.158.64:8282/proxy/api/
+    appid: 2ce0ee3e3baf11ed8920fa163ee72ad2
+    account: baqjk
+    password: Baq12345!@#
+    #市平台接口API异常监控
+    monitor:
+      #是否开启监控
+      enable: true 
+      #异常消息接收人员列表
+      receivers:
+        - user-name: 何建艺
+          ga-user-id: qc8mizm22drxxupc0h5uff
+        - user-name: 莫玉英
+          ga-user-id: 4rqk6p21meb9xqdpm9ycv6          
+        - user-name: 颜福
+          ga-user-id: jsihe451hfzx05gy4wqw2p
+        - user-name: 林铠
+          ga-user-id: 5yvdn2bowtwuwqv7r0ez6e
+        - user-name: 江嘉禄
+          ga-user-id: n6x3djln890728pa45i7bl
+        - user-name: 罗镇盛
+          ga-user-id: typ1vq70tmpjwwlpr10bgo
+        - user-name: 赵晓航
+          ga-user-id: 3mjn5beybaq4d4htudbuwk      
+        - user-name: 姚广星
+          ga-user-id: q4cwoxe90xae9ceffvao5q
+
+
+mssq:
+  #服务总线接口配置
+  fwzx:
+    generateTokenUrl: http://10.224.158.64:8282/proxy/auth/token
+    appId: f160c8db3f244606bbced7b82d800bbc
+    appKey: ZjE2MGM4ZGIzZjI0NDYwNmJiY2VkN2I4MmQ4MDBiYmM6U1pzbXNzcTIwMjI=
+  api:
+    mssqUrl: http://10.224.158.64:8282/proxy/api/
+    secret: 1023725476130062336
+    code: SZ_BAOAN
+#地址实体编码匹配接口
+addrApi: 
+  username: mssq
+  password: mssq@123!
+  pwdRsa: Ptjst/L3xlP3g+r3mOwWXuNlJIzHEiluhhtSSTqSAXQmi664PiR/L/KdYrSIl5ZzukMvhsquF4Atni9gvFNoEw==
+  #室外地址接口
+  outerUrl: http://10.99.85.158:9999
+  #室内地址接口
+  # innerUrl: http://10.97.16.93:7010
+  #innerUrl: http://10.99.16.84:7010
+  innerUrl: http://10.97.229.43:7010
+  #地址实体编码匹配接口(账号密码，数据治理专用)
+  searchUsername: YXW
+  searchPassword: YXW@0223
+
+#吉奥接口账号密码，根据经纬度去获取坐标的信息
+coordinateApi: 
+  searchUsername: mssqz
+  searchPassword: mssq@MS-
+  md5Password: amFL1tHIMPQ5HKcNSnAGJ3+gYKE3x89bdcA9lEYTNTgOEfAJMZJkW8UehPBMPB1AZZwQlAE8LzyMR1EiFuWkMw==
+  url: http://10.97.229.43:7010
+
+
+
+pingjia: 
+  appId: baqymjksq
+  sign: 043454fcd5dfd31b3f09fd64f463e1c23b4fa066449b0a5d89ae96471b19766b85c457afd9b51445950cc88e6c8ff6a8337bba56d3ff50debe935dfb891939ba5448e3f449dc7080a5681d281c75b56423ca9dc182fddb35c6e697e90b7d07c6897d20a0d397b077e50abd23322e171d455b153d12506c37ec6c07aab7e0fdf1c3c362986fdb1e73fda5
+  timeStamp: 20230513180503
+  

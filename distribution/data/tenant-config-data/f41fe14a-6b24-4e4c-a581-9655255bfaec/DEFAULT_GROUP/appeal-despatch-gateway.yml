@@ -1,0 +1,222 @@
+# 安全配置
+security:
+  # 验证码
+  captcha:
+    # 是否开启验证码
+    enabled: true
+    # 验证码类型 math 数组计算 char 字符验证
+    type: MATH
+    # line 线段干扰 circle 圆圈干扰 shear 扭曲干扰
+    category: CIRCLE
+    # 数字验证码位数
+    numberLength: 1
+    # 字符验证码长度
+    charLength: 4
+  # 防止XSS攻击
+  xss:
+    enabled: true
+    excludeUrls:
+      - /system/notice
+      - /workflow/model/save
+  # 不校验白名单
+  ignore:
+    whites:
+      - /statistics/Cim/**
+      - /**
+      - /code
+      - /auth/logout
+      - /auth/login
+      - /auth/smsLogin
+      - /auth/xcxLogin
+      - /auth/register
+      - /resource/sms/code
+      - /*/v3/api-docs
+      - /csrf
+      - /workorder/**
+      - /workorder/keyevent/**
+      - /wechat/wxLogin/**
+      - /workorder/leader/sta
+      - /auth/ssoLogin
+      - /workorder/generate
+      - /wechat/ssoapi/**
+      - /auth/silenceLogin
+      - /elastic/ik/getAnalyze
+      - /algorithm/**
+      - /system/**
+      - /doc.html/**
+spring:
+  cloud:
+    # 网关配置
+    gateway:
+      # 打印请求日志(自定义)
+      requestLog: true
+      websocket: 
+        enabled: true
+      discovery:
+        locator:
+          lowerCaseServiceId: true
+          enabled: true
+      routes:
+        # 认证中心
+        - id: appeal-despatch-auth
+          uri: lb://appeal-despatch-auth
+          predicates:
+            - Path=/auth/**
+          filters:
+            # 验证码处理
+            - ValidateCodeFilter
+            - StripPrefix=1
+        # 代码生成
+        - id: appeal-despatch-gen
+          uri: lb://appeal-despatch-gen
+          predicates:
+            - Path=/code/**
+          filters:
+            - StripPrefix=1
+        # 系统模块
+        - id: appeal-despatch-system
+          uri: lb://appeal-despatch-system
+          predicates:
+            - Path=/system/**
+          filters:
+            - StripPrefix=1
+        # 系统模块websocket
+        - id: appeal-despatch-system
+          uri: lb:ws://appeal-despatch-system
+          predicates:
+            - Path=/system/websocket/**
+          filters:
+            - StripPrefix=1
+        # 资源服务
+        - id: appeal-despatch-resource
+          uri: lb://appeal-despatch-resource
+          predicates:
+            - Path=/resource/**
+          filters:
+            - StripPrefix=1
+        # 工作流服务
+        - id: appeal-despatch-workflow
+          uri: lb://appeal-despatch-workflow
+          predicates:
+            - Path=/workflow/**
+          filters:
+            - StripPrefix=1    
+        # 政务微信    
+        - id: appeal-despatch-wechat
+          uri: lb://appeal-despatch-wechat
+          predicates:
+            - Path=/wechat/**
+          filters:
+            - StripPrefix=1    
+          # i深圳    
+        - id: appeal-despatch-ishenzhen
+          uri: lb://appeal-despatch-ishenzhen
+          predicates:
+            - Path=/ishenzhen/**
+          filters:
+            - StripPrefix=1  
+        # 工单服务    
+        - id: appeal-despatch-workorder
+          uri: lb://appeal-despatch-workorder
+          predicates:
+            - Path=/workorder/**
+          filters:
+            - StripPrefix=1  
+          # 市级诉求工单同步服务    
+        - id: appeal-despatch-citylevel-datasync
+          uri: lb://appeal-despatch-citylevel-datasync
+          predicates:
+            - Path=/datasync/**
+          filters:
+            - StripPrefix=1 
+           # 大屏报表    
+        - id: appeal-despatch-statistics
+          uri: lb://appeal-despatch-statistics
+          predicates:
+            - Path=/statistics/**
+          filters:
+            - StripPrefix=1 
+            
+          # 搜索引擎       
+        - id: appeal-despatch-elasticsearch
+          uri: lb://appeal-despatch-elasticsearch
+          predicates:
+            - Path=/elastic/**
+          filters:
+            - StripPrefix=1   
+                 # POIword服务
+        - id: appeal-despatch-pioprocessing
+          uri: lb://appeal-despatch-pioprocessing
+          predicates:
+            - Path=/pioprocess/**
+          filters:
+            - StripPrefix=1       
+        # 算法相关
+        - id: appeal-despatch-algorithm
+          uri: lb://appeal-despatch-algorithm
+          predicates:
+            - Path=/algorithm/**
+          filters:
+            - StripPrefix=1     
+        # 算法相关
+        - id: appeal-despatch-cimalgm
+          uri: lb://appeal-despatch-cimalgm
+          predicates:
+            - Path=/cimalgm/**
+          filters:
+            - StripPrefix=1     
+        # 测试websocket转发
+        # - id: websockettest
+          # uri: lb:ws://appeal-despatch-system
+          # uri: ws://localhost:8989
+          # predicates:
+            # - Path=/system2/websocket/**
+            # - Path=/ws/**
+          # filters:
+          #   - StripPrefix=1
+ 
+    # sentinel 配置
+    sentinel:
+      # nacos配置持久化
+      datasource:
+        ds1:
+          nacos:
+            server-addr: ${spring.cloud.nacos.server-addr}
+            dataId: sentinel-${spring.application.name}.json
+            groupId: ${spring.cloud.nacos.config.group}
+            namespace: ${spring.profiles.active}
+            data-type: json
+            rule-type: flow
+knife4j:
+  gateway:
+    enabled: true
+    strategy: discover
+    discover:
+      version: openapi3
+      service-config:
+        appeal-despatch-system:
+          group-name: 系统基础服务
+          order: 1
+        appeal-despatch-auth:
+          group-name: 认证服务
+          order: 2
+        appeal-despatch-statistics:
+          group-name: 统计服务
+          order: 3
+        appeal-despatch-workflow:
+          group-name: 工作流服务
+          order: 4
+        appeal-despatch-wechat:
+          group-name: 微信服务
+          order: 5
+        appeal-despatch-algorithm:
+          group-name: 算法服务
+          order: 6
+        appeal-despatch-ishenzhen:
+          group-name: 市民服务
+          order: 7
+
+management:
+  endpoint:
+    gateway:
+      enabled: false          

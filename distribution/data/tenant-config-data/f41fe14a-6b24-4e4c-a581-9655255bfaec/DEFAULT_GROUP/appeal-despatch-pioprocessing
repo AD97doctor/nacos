@@ -1,0 +1,26 @@
+spring:
+  datasource:
+    dynamic:
+      # 设置默认的数据源或者数据源组,默认值即为 master
+      primary: master
+      datasource:
+        # 主库数据源
+        master:
+          driver-class-name: org.postgresql.Driver
+          url: ${datasource.system-master.url}
+          username: ${datasource.system-master.username}
+          password: ${datasource.system-master.password}
+        appeal_work:
+          driver-class-name: org.postgresql.Driver
+          #url: jdbc:mysql://10.99.16.70:9030/appeal_work?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&autoReconnect=true&useSSL=false&serverTimezone=GMT%2B8&rewriteBatchedStatements=true
+          #username: appeal1
+          #password: appeal123456   
+          url: jdbc:postgresql://10.1.48.215:5679/appeal_work
+          username: unvdb
+          password: KYHjyJNOKB1fV7Lz   
+        # 从库数据源
+        # slave:
+        #  driver-class-name:
+        #  url:
+        #  username:
+        #  password:

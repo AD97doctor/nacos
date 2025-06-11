@@ -1,0 +1,65 @@
+
+
+           
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    # 动态数据源文档 https://www.kancloud.cn/tracy5546/dynamic-datasource/content
+    dynamic:
+         # 设置默认的数据源或者数据源组,默认值即为 master
+      primary: master
+      datasource:
+        # 主库数据源
+        master:
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://10.1.48.215:5679/appeal-despatch
+          username: unvdb
+          password: KYHjyJNOKB1fV7Lz
+
+        # appeal_ana:
+        #   driver-class-name: com.mysql.cj.jdbc.Driver
+        #   url: jdbc:mysql://10.99.16.88:9030/appeal_ana?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&autoReconnect=true&useSSL=false&serverTimezone=GMT%2B8&rewriteBatchedStatements=true
+        #   username: labels
+        #   password: label123456
+        # dashuju:
+        #   driver-class-name: com.mysql.cj.jdbc.Driver
+        #   url: jdbc:mysql://10.99.16.88:3306/big-data?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&autoReconnect=true&useSSL=false&serverTimezone=GMT%2B8&rewriteBatchedStatements=true
+        #   username: root
+        #   password: u^VszMxKm9c_1G94
+        appeal_work:
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://10.1.48.215:5679/appeal-despatch
+          username: unvdb
+          password: KYHjyJNOKB1fV7Lz
+
+          # driver-class-name: com.mysql.cj.jdbc.Driver
+          # url: jdbc:mysql://10.99.16.70:9030/appeal_work?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&autoReconnect=true&useSSL=false&serverTimezone=GMT%2B8&rewriteBatchedStatements=true
+          # username: appeal1
+          # password: appeal123456
+      # 性能分析插件(有性能损耗 不建议生产环境使用)
+      p6spy: true
+      # 开启seata代理，开启后默认每个数据源都代理，如果某个不需要代理可单独关闭
+      seata: false
+      # 严格模式 匹配不到数据源则报错
+      strict: true
+      druid:
+        initial-size: 5
+        min-idle: 5
+        maxActive: 20
+        maxWait: 60000
+        timeBetweenEvictionRunsMillis: 60000
+        minEvictableIdleTimeMillis: 300000
+        testWhileIdle: true
+        testOnBorrow: false
+        testOnReturn: false
+        poolPreparedStatements: true
+        maxPoolPreparedStatementPerConnectionSize: 20
+        filters: stat,slf4j
+        connectionProperties: druid.stat.mergeSql\=true;druid.stat.slowSqlMillis\=5000
+
+# seata配置
+seata:
+  # 关闭自动代理
+  enable-auto-data-source-proxy: false
+remindlimit:
+  time: '2023-05-09 00:00:00'

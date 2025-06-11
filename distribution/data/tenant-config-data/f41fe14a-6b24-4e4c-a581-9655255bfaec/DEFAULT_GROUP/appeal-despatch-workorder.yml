@@ -1,0 +1,205 @@
+spring:
+  datasource:
+    dynamic:
+      # 设置默认的数据源或者数据源组,默认值即为 master
+      #primary: master
+      datasource:
+        # 主库数据源
+        master:
+          driver-class-name: org.postgresql.Driver
+          #driver-class-name: com.mysql.cj.jdbc.Driver
+          url: ${datasource.workorder.url}
+          username: ${datasource.workorder.username}
+          password: ${datasource.workorder.password}
+        # 从库数据源
+        # slave:
+        #  driver-class-name:
+        #  url:
+        #  username:
+        #  password:
+word: 
+  template: 
+    ossid: 1586416368844455938
+
+sms:
+  enabled: true
+  receiver: 13530590812
+  dch: 19876284586
+  rgx: 17666555910
+  yb: 13407347009
+cuiban:
+  enabled: true
+  receiver: 4rqk6p21meb9xqdpm9ycv6
+  #receiver: 9k7o5tifwcfjc7s9vu9gc9 何敏
+wechat:
+  enabled: true
+  receiver: 4rqk6p21meb9xqdpm9ycv6
+export: 
+  record: 
+    max: 10000
+    asyn: 30
+
+
+intellignce:
+  word:
+    prediction:
+      tx:
+        dept: http://10.97.36.115:30002/sentosa_workspace_web/v1/service/yxw_mssq/bumenfenpai0428_v1
+        licenceKey: dg2/oK6K8qv07XKuJpfmsXzoGf2zjcUMX6Io2pnESvga9KcxYUzBPw==
+      yxw:
+        dept: http://10.99.16.87:10131/model/v01/bayes_depts?use_rules=false
+        street: http://10.99.16.87:10131/model/v01/bayes_street?use_rules=false
+        extract: http://10.99.16.87:10131/wordseg/v01/extract_tags?topw=20
+      ft:
+        classification: http://10.99.24.10:8100/dialing-assignment/classification?task=complaint_classification&size=10
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+
+statistics:
+  duplicateWarn: 20
+  sensitiveWarn: 20
+# pc统计诉求预警另外两个值指定，目前暂时没统计可以实现，先写死，通过nacos变更
+duanxin:
+  dyc: 13428758563
+  rgx: 19876284586
+  yb: 13407347009
+
+# 批示督办白名单
+zwwx:
+  push:
+    whitelist:
+      userids:
+        # 何敏
+        - 1576547314598674432
+        # 罗镇盛
+        # - 1619529952934232064
+        # 江嘉禄
+        - 1586341475979886592
+        # 杜英春
+        # - 1576818133614723073
+        # 易彬
+        # - 1576835018959880192
+        # 常胜宾
+        # - 1631233313630846976
+        # 姚广星
+        # - 1632929067651039232
+        # 张甜
+        # - 1643886036658421760
+        # 杨晓军
+        # - 1576818133610528768
+        # 莫玉英
+        - 1576547317069119488
+
+# 批示督办开关和指定接收人 打开后必须要在列表里的人才会接受消息（取交集）
+psdb:
+  enabled: false
+  list:
+    # 陈锐
+    # - 1576547315311706112
+    # 莫玉英
+    - 1576547317069119488
+    # 何敏
+    - 1576547314598674432
+    # 颜福
+    - 1576547319858331648
+    # 林铠
+    - 1576547320558780416
+    # 陈璟媛
+    - 1586341476139270145
+    # 江嘉禄
+    - 1586341475979886592
+    # 常胜宾
+    - 1631233313630846976
+    # 姚广星
+    - 1632929067651039232
+    # 张甜
+    - 1643886036658421760
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+    show-extensions: true
+  api-docs:
+    path: /v3/api-docs
+  group-configs:
+    - group: 'default'
+      paths-to-match: '/config/**'
+      packages-to-scan: com.appeal.workorder.controller
+  default-flat-param-object: false
+
+cpdfds:
+  cpd: 0
+  nbry: 0
+  wbry: 1
+      
+# 导出模板 ossid
+export-template:
+  # 敏感诉求 excel 模板
+  appeal-group: 1670997181136859138
+
+# 办结审核功能开关
+group: 
+  check:
+    enabled: true 
+
+# 算法侧接口请求地址(label为-1，表示算法测试环境)
+data:
+  writeBack:
+    url: http://10.99.16.152:10432
+    label: -1
+
+# 腾讯AI外呼配置
+robot-call:
+  # 服务配置
+  config:
+    # 开发者id
+    appId: "202320756"
+    # 应用id
+    sid: "1300002050"
+    # 应用密钥
+    secret: "S7e872c14f1"
+    # 用户id（admin用户的唯一id，所有接口都是以admin用户的身份去请求的）
+    openId: "207A0BC185EF18C75BBAAFD711847AAA"
+    # 令牌token
+    token: "baoanminshengsuqiu"
+    # 消息加解密密钥
+    encodingAesKey: "DkdiOi3GIEig0DVvXcdbuNA2rxaP8zRtECn8T3xym9U"
+  limit-time:
+    # 是否开启任务执行时间限制
+    enable: false
+    # 任务执行限制开始时间（enable为true时必填）
+    begin: "09:00:00"
+    # 任务执行限制结束时间（enable为ture时必填）
+    end: "20:00:00"
+  # 匿名工单配置
+  anonymity:
+    # 机器人id
+    robot-id: "1699310862602440714"
+    # 名单id
+    customer-id: 53
+    # 是否允许号码重复 0-不允许（默认） 1-允许
+    phone-duplicate: 1
+    # 视为匿名的关键词（名称中含一下任何关键词则视为匿名工单）
+    keyword: 先生,女士,匿名,测试,微信用户
+  # 实名工单配置
+  autonym:
+    # 机器人id
+    robot-id: "1676054975034477097"
+    # 名单id
+    customer-id: 52
+    # 是否允许号码重复 0-不允许（默认） 1-允许
+    phone-duplicate: 1
+  # 异常事件政务微信推送
+  push:
+    # 是否开启政务微信推送
+    enable: true
+    # 政务微信推送对象id
+    users:
+      # 许坤鑫
+      - zrt111ml6n60g712l4gm2x
+#市好差评来源工单误评功能 开关
+misEval:
+  enabled: true

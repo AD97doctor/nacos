@@ -1,0 +1,60 @@
+#政务微信
+ishenzhen:
+  app:
+    apply:
+      appId: bace7002b3b0480f8608c38324ef13aa
+      appKey: 8094a5bf5ae14e55bda649b40d5639f4
+      realm: https://isz-app.sz.gov.cn
+  sms:
+    userName: '0204'
+    passWord: Mssq!@#1013
+    key: chinagdn
+
+spring:
+  datasource:
+    dynamic:
+      # 设置默认的数据源或者数据源组,默认值即为 master
+      primary: master
+      datasource:
+        # 主库数据源
+        master:
+          driver-class-name: org.postgresql.Driver
+          url: ${datasource.system-master.url}
+          username: ${datasource.system-master.username}
+          password: ${datasource.system-master.password}
+        # 从库数据源
+        # slave:
+        #  driver-class-name:
+        #  url:
+        #  username:
+        #  password:
+appraise:
+  back_url: https://bamssq.baoan.gov.cn/citizen-test/#/
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+    show-extensions: true
+  api-docs:
+    path: /v3/api-docs
+  group-configs:
+    - group: 'default'
+      paths-to-match: '/config/**'
+      packages-to-scan: com.appeal.ishenzhen.controller
+  default-flat-param-object: false
+
+log:
+  types:
+    - 101
+    - 201
+    - 202
+    - 203
+    - 301
+    - 302
+    - 303
+    - 401
+    - 501
+    - 502
+    - 503
